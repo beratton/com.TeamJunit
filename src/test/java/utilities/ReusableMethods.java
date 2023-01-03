@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.sql.Driver;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +27,51 @@ public class ReusableMethods {
             Thread.sleep(saniye);
         } catch (InterruptedException e) {
 
+        }
+    }
+
+    public static void tumSayfaScreenShotCek(WebDriver driver)  {
+        //1- Takescreenshot objesi olusturun
+        TakesScreenshot tss=(TakesScreenshot) driver;
+        // 2- Resmi son olarak kaydedecegimiz dosyayi olusturun
+
+        // Her resim cektiginde ust uste kaydetmemesi icin
+        // resim dosya yoluna tarih ve saat iceren bir ek yapalim
+        LocalDateTime ldt= LocalDateTime.now();
+                DateTimeFormatter dtf=DateTimeFormatter.ofPattern("yyMMddHHmmss");
+                String tarih=ldt.format(dtf);
+                String dosyaYolu="target/ekranResimleri/tumEkranSS"+tarih+".jpeg";
+        File tumSayfaScreenShot= new File(dosyaYolu);
+        // 3- Tss objesi kullanarak ekran goruntusu alip gecici dosyaya kaydet
+        File geciciDosya= tss.getScreenshotAs(OutputType.FILE);
+        //4- Gecici dosyayi ana dosyaya kopyala
+        try {
+            FileUtils.copyFile(geciciDosya,tumSayfaScreenShot);
+        } catch (IOException e) {
+
+        }
+
+    }
+
+    public static void elementSSCek(WebElement element) {
+        // 1- screenshot alacagimiz elementi locate et
+// 2- kaydedecegimiz dosyayi olustur
+        LocalDateTime ldt= LocalDateTime.now();
+        DateTimeFormatter dtf=DateTimeFormatter.ofPattern("yyMMddHHmmss");
+        String tarih=ldt.format(dtf);
+        String dosyaYolu="target/ekranResimleri/tumEkranSS" +tarih+ ".jpeg";
+
+        File elementSS= new File(dosyaYolu);
+
+// 3- gecici dosyayi olusturup, element uzerinden screenshot yapalim
+
+        File gecici= element.getScreenshotAs(OutputType.FILE);
+
+// 4- gecici dosyayi, hedef dosyaya kopyala
+
+        try {
+            FileUtils.copyFile(gecici,elementSS);
+        } catch (IOException e) {
         }
     }
 
