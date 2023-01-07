@@ -18,9 +18,9 @@ public class C06_JSExecutor extends TestBase {
 
         JavascriptExecutor jse= (JavascriptExecutor) driver;
         jse.executeScript("arguments[0].click()",sellLinki);
+        jse.executeScript("alert('Bu is bu kadar')");
+
         ReusableMethods.bekle(4);
-
-
 
     }
 }

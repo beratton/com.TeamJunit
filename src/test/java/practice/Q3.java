@@ -72,6 +72,5 @@ driver.findElement(By.xpath("//input[@value='Submit']")).click();
 
                 Assert.assertTrue(baslikGorundumu);
 
-
     }
 }
